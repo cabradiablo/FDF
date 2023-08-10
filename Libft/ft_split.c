@@ -6,23 +6,11 @@
 /*   By: alepinto <alepinto@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 03:58:51 by alepinto          #+#    #+#             */
-/*   Updated: 2023/07/19 10:53:29 by alepinto         ###   ########.fr       */
+/*   Updated: 2023/05/03 06:05:43 by alepinto         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_security(char **matrix, int row)
-{
-	if (!matrix[row])
-	{
-		while (row--)
-			free(matrix[row]);
-		free(matrix);
-		return (1);
-	}
-	return (0);
-}
 
 static int	ft_seglen(char const *s, char c, int i)
 {
@@ -55,7 +43,7 @@ char	**ft_split(char const *s, char c)
 		if (s[i] != c)
 		{
 			matrix[row] = ft_substr(s, i, ft_seglen(s, c, i));
-			if (ft_security(matrix, row++) == 1)
+			if (ft_freesplit(matrix, row++) == 1)
 				return (NULL);
 			i += ft_seglen(s, c, i);
 		}
