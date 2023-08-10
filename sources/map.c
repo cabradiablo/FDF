@@ -21,8 +21,7 @@ void ft_colorandcoors_getter(char ***parsecoors, t_datamap **datamap)
         {
             aux = ft_split(parsecoors[i][j], ',');
             aux_coors[i][j] = ft_atoi(aux[0]);
-            aux_color[i][j] = ft_atoi_base(aux[1], "0123456789ABCDEF");
-            j++;
+            aux_color[i][j++] = ft_atoi_base(aux[1], "0123456789ABCDEF");
             ft_free_2Dmatrix(aux, 2);
         }
         i++;
@@ -64,6 +63,8 @@ int *ft_width_getter(char *argv, int height)
 
     fd = ft_open(argv);
     width = (int *)malloc(height * sizeof(int));
+    if (!width)
+        ft_error("MALLOC\n");
     line = get_next_line(fd);
     i = 0;
     while (line)
@@ -84,6 +85,8 @@ int ft_height_getter(char *argv)
     fd = ft_open(argv);
     height = 0;
     line = get_next_line(fd);
+    if (!line)
+        ft_error("EMPTY MAP\n");
     while (line)
     {
         height++;

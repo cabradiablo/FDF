@@ -1,6 +1,35 @@
 #include "fdf.h"
 #include "libft.h"
 
+void    argv_chekcer(int argc, char **argv)
+{
+    char    *line;
+    char    *ptr;
+    int     fd;
+
+    if (argc != 2)
+		ft_error("INVALID ARGUMENTS\n");
+    fd = ft_open(argv[1]);
+    line = get_next_line(fd);
+    while (line)
+    {
+        ptr = line;
+        if (*ptr == '+' || *ptr == '-')
+            ptr++;
+        while (ft_isdigit(*ptr) == 1)
+            ptr++;
+        if (ft_strncmp(ptr, ",0x", 3) == 0)
+            ptr += 3;
+        while (ft_strchr("0123456789ABCDEF", *ptr) != NULL)
+            ptr++;
+        if (*ptr != ' ' && *ptr != '\0')
+            ft_error("INVALID MAP SYNTAX\n");
+        free(line);
+        line = get_next_line(fd);
+    }
+    close(fd);
+}
+
 int ft_open(char *argv)
 {
     int fd;
@@ -18,7 +47,7 @@ void ft_init(t_datamap **datamap)
 {
     *datamap = malloc(sizeof(t_datamap));
     if (!*datamap)
-        ft_error("Memory allocation failed\n");
+        ft_error("MALLOC FAILED\n");
     (*datamap)->height = 0;
     (*datamap)->width = NULL;
     (*datamap)->coors = NULL;

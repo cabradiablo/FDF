@@ -81,6 +81,8 @@ int		ft_height_getter(char *argv);
 void    ft_map_getter(char *argv, t_datamap **datamap);
 
 //UTILS		utils.c
+
+void    argv_chekcer(int argc, char **argv);
 void	ft_init(t_datamap **datamap);
 int		ft_open(char *argv);
 void	ft_print_map(t_datamap *datamap);
