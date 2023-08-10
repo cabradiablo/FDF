@@ -74,12 +74,16 @@ typedef struct s_fdf
 
 
 //READ MAP AND PARSE    map.c
-int		ft_open(char *argv);
 void 	ft_colorandcoors_getter(char ***coors, t_datamap **datamap);
 char    ***ft_parse_coors(char *argv, int height);
 int		*ft_width_getter(char *argv, int height);
 int		ft_height_getter(char *argv);
 void    ft_map_getter(char *argv, t_datamap **datamap);
+
+//UTILS		utils.c
+void	ft_init(t_datamap **datamap);
+int		ft_open(char *argv);
+void	ft_free(t_datamap *datamap);
 
 //ERROR EXIT  error.c
 

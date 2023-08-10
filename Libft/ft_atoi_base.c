@@ -45,6 +45,8 @@ int		ft_atoi_base(char *str, char *base)
 	int base_len;
 	int num;
 
+	if(!str)
+		return (0);
 	num = 0;
 	base_len = check_base(base);
 	sign = 0;

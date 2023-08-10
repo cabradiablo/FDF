@@ -12,13 +12,13 @@ void ft_colorandcoors_getter(char ***parsecoors, t_datamap **datamap)
     aux_coors = (int **)malloc((*datamap)->height * sizeof(int*));
     aux_color = (int **)malloc((*datamap)->height * sizeof(int*));
     i = 0;
-    while (i <= (*datamap)->height)
+    while (i < (*datamap)->height)
     {
         j = 0;
         aux_coors[i] = (int *)malloc((*datamap)->width[i] * sizeof(int));
         aux_color[i] = (int *)malloc((*datamap)->width[i] * sizeof(int));
         aux = ft_split(parsecoors[i][j], ',');
-        while ( j <= (*datamap)->width[i])
+        while ( j < (*datamap)->width[i])
         {
             aux_coors[i][j] = ft_atoi(aux[0]);
             aux_color[i][j++] = ft_atoi_base(aux[1], "0123456789ABCDEF");
@@ -100,4 +100,5 @@ void    ft_map_getter(char *argv, t_datamap **datamap)
     (*datamap)->width = ft_width_getter(argv, (*datamap)->height);
     parsecoors = ft_parse_coors(argv, (*datamap)->height);
     ft_colorandcoors_getter(parsecoors, datamap);
+    free(parsecoors);
 }
