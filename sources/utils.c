@@ -1,6 +1,5 @@
 #include "fdf.h"
-#include "../includes/fdf.h"
-#include "../Libft/libft.h"
+#include "libft.h"
 
 int ft_open(char *argv)
 {

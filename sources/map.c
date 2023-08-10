@@ -1,6 +1,4 @@
 #include "fdf.h"
-#include "../includes/fdf.h"
-#include "../Libft/libft.h"
 #include "libft.h"
 
 void ft_colorandcoors_getter(char ***parsecoors, t_datamap **datamap)

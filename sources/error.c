@@ -1,4 +1,4 @@
-#include "../includes/fdf.h"
+#include "fdf.h"
 #include <unistd.h>
 
 void    ft_error(char *msg)
