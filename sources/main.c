@@ -9,6 +9,7 @@ int main(int argc, char **argv)
 		ft_error("INVALID ARGUMENTS");
 	ft_init(&datamap);
 	ft_map_getter(argv[1], &datamap);
-	ft_free(datamap);
+	ft_print_map(datamap);
+	ft_free_map(datamap);
 	return (0);
 }

@@ -17,13 +17,14 @@ void ft_colorandcoors_getter(char ***parsecoors, t_datamap **datamap)
         j = 0;
         aux_coors[i] = (int *)malloc((*datamap)->width[i] * sizeof(int));
         aux_color[i] = (int *)malloc((*datamap)->width[i] * sizeof(int));
-        aux = ft_split(parsecoors[i][j], ',');
         while ( j < (*datamap)->width[i])
         {
+            aux = ft_split(parsecoors[i][j], ',');
             aux_coors[i][j] = ft_atoi(aux[0]);
-            aux_color[i][j++] = ft_atoi_base(aux[1], "0123456789ABCDEF");
+            aux_color[i][j] = ft_atoi_base(aux[1], "0123456789ABCDEF");
+            j++;
+            ft_free_2Dmatrix(aux, 2);
         }
-        free(aux);
         i++;
     }
     (*datamap)->coors = aux_coors;
@@ -39,7 +40,7 @@ char    ***ft_parse_coors(char *argv, int height)
     fd = ft_open(argv);
     parsecoors = (char ***)malloc((height + 1) * (sizeof(char **)));
     if (!parsecoors)
-        ft_error("MALLOC");
+        ft_error("MALLOC\n");
     height = 0;
     if (fd == -1)
         return (NULL);
@@ -100,5 +101,5 @@ void    ft_map_getter(char *argv, t_datamap **datamap)
     (*datamap)->width = ft_width_getter(argv, (*datamap)->height);
     parsecoors = ft_parse_coors(argv, (*datamap)->height);
     ft_colorandcoors_getter(parsecoors, datamap);
-    free(parsecoors);
+    ft_free_3Dmatrix(parsecoors, (*datamap)->height, (*datamap)->width);
 }

@@ -25,6 +25,7 @@ SOURCES_DIRECTORY = ./sources/
 SOURCES_LIST = main.c			\
 	       		map.c			\
 				error.c			\
+				free.c			\
 				utils.c			\
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))

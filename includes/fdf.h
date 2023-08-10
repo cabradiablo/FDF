@@ -83,7 +83,12 @@ void    ft_map_getter(char *argv, t_datamap **datamap);
 //UTILS		utils.c
 void	ft_init(t_datamap **datamap);
 int		ft_open(char *argv);
-void	ft_free(t_datamap *datamap);
+void	ft_print_map(t_datamap *datamap);
+
+//FREE		free.c
+void    ft_free_2Dmatrix(char **matrix, int width);
+void    ft_free_3Dmatrix(char ***matrix, int height, int *width);
+void	ft_free_map(t_datamap *datamap);
 
 //ERROR EXIT  error.c
 
