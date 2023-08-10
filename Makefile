@@ -1,7 +1,7 @@
 NAME = fdf.exe
 
-CC = gcc -v
-FLAGS = -Wall -Werror -Wextra -O3
+CC = gcc
+FLAGS = -Wall -Werror -Wextra -O3 -g3 -fsanitize=address
 LIBRARIES = -lmlx -lm -lft -L$(LIBFT_DIRECTORY) -L$(MINILIBX_DIRECTORY)
 INCLUDES = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS) -I$(MINILIBX_HEADERS)
 
@@ -44,7 +44,7 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MINILIBX) $(OBJECTS_DIRECTORY) $(OBJECTS)
-	@$(CC) $(FLAGS) $(LIBRARIES) $(INCLUDES) $(OBJECTS) -o $(NAME)
+	@$(CC) $(FLAGS) $(INCLUDES) $(OBJECTS) $(LIBRARIES)  -o $(NAME)
 	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
 
