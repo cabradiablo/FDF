@@ -96,6 +96,7 @@ void	ft_free_map(t_datamap *datamap);
 
 void    ft_error(char *msg);
 
+//COLOR   COLOR.C
 
 #endif
 
