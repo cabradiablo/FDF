@@ -50,6 +50,7 @@ typedef struct			s_mouse
 typedef struct	s_mlx 
 {
 	void	*mlx;
+	void	*win;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -84,6 +85,7 @@ void    ft_map_getter(char *argv, t_datamap **datamap);
 
 void    argv_chekcer(int argc, char **argv);
 void	ft_init(t_datamap **datamap);
+void	ft_init_mlx(t_mlx **datamlx);
 int		ft_open(char *argv);
 void	ft_print_map(t_datamap *datamap);
 
@@ -95,6 +97,8 @@ void	ft_free_map(t_datamap *datamap);
 //ERROR EXIT  error.c
 
 void    ft_error(char *msg);
+
+//void    mlx_launcher(t_mlx   **datamlx);
 
 //COLOR   COLOR.C
 

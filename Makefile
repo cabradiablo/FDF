@@ -2,7 +2,12 @@ NAME_L = fdf.linux
 NAME_M = fdf.mac
 
 CC = gcc
-FLAGS = -Wall -Werror -Wextra -O3 -g3 -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -O3 
+#FLAGS += -g3 -fsanitize=address
+
+%.o: %.c
+	gcc -c $< -o $@
+
 #MAC
 LIBRARIES_M = -lmlx -lm -lft -L$(LIBFT_DIRECTORY) -L$(MINILIBX_M_DIRECTORY)
 INCLUDES_M = -I$(HEADERS_DIRECTORY) -I$(LIBFT_HEADERS) -I$(MINILIBX_M_HEADERS)
@@ -20,7 +25,7 @@ MINILIBX_L_DIRECTORY = minilibx_linux/
 MINILIBX_L = $(MINILIBX_L_DIRECTORY)libmlx.a
 MINILIBX_L_HEADERS = $(MINILIBX_L_DIRECTORY)
 
-MINILIBX_M_DIRECTORY = minilibx_macos/
+MINILIBX_M_DIRECTORY = minilibx_macos/minilibx_macos/
 MINILIBX_M = $(MINILIBX_M_DIRECTORY)libmlx.a
 MINILIBX_M_HEADERS = $(MINILIBX_M_DIRECTORY)
 
@@ -41,6 +46,8 @@ SOURCES_LIST = main.c			\
 				error.c			\
 				free.c			\
 				utils.c			\
+				draw.c			\
+				graphic.c		\
 
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
@@ -60,12 +67,12 @@ RESET = \033[0m
 #NORMS
 all: $(NAME_M)
 
-$(NAME_M): $(LIBFT) $(MINILIBX_M) $(OBJECTS_DIRECTORY_M) $(OBJECTS)
-	@$(CC) $(FLAGS) $(INCLUDES_M) $(OBJECTS) $(LIBRARIES_M)  -o $(NAME)
+$(NAME_M): $(LIBFT) $(MINILIBX_M) $(OBJECTS_DIRECTORY) $(OBJECTS)
+	@$(CC) $(FLAGS) $(INCLUDES_M) $(OBJECTS) $(LIBRARIES_M)  -o $(NAME_M)
 	@echo "\n$(NAME_M): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_M): $(GREEN)$(NAME) was created$(RESET)"
 
-$(OBJECTS_DIRECTORY_M):
+$(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
 	@echo "$(NAME_M): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 
@@ -73,57 +80,57 @@ $(OBJECTS_DIRECTORY_M)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	@$(CC) $(FLAGS) -c $(INCLUDES_M) $< -o $@
 	@echo "$(GREEN).$(RESET)\c"
 
-$(LIBFT):
-	@echo "$(NAME_M): $(GREEN)Creating $(LIBFT)...$(RESET)"
-	@$(MAKE) -sC $(LIBFT_DIRECTORY)
-
 $(MINILIBX_M):
 	@echo "$(NAME_M): $(GREEN)Creating $(MINILIBX_M)...$(RESET)"
 	@$(MAKE) -sC $(MINILIBX_M_DIRECTORY)
 
+print: 
+	echo $(OBJECTS_DIRECTORY)
+
 linux: $(NAME_L)
 
-$(NAME_L): $(LIBFT) $(MINILIBX_L) $(OBJECTS_DIRECTORY_L) $(OBJECTS)
-	@$(CC) $(FLAGS) $(INCLUDES_L) $(OBJECTS) $(LIBRARIES_L)  -o $(NAME)
+$(NAME_L): $(LIBFT) $(MINILIBX_L) $(OBJECTS_DIRECTORY) $(OBJECTS)
+	$(CC) $(FLAGS) $(INCLUDES_L) $(OBJECTS) $(LIBRARIES_L) -o $(NAME_L)
 	@echo "\n$(NAME_L): $(GREEN)object files were created$(RESET)"
 	@echo "$(NAME_L): $(GREEN)$(NAME) was created$(RESET)"
 
-$(OBJECTS_DIRECTORY_L)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
-	@mkdir -p $(OBJECTS_DIRECTORY)
+$(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
+	mkdir -p $(OBJECTS_DIRECTORY)
 	@echo "$(NAME_L): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
 	@$(CC) $(FLAGS) -c $(INCLUDES_L) $< -o $@
 	@echo "$(GREEN).$(RESET)\c"
 
 $(LIBFT):
-	@echo "$(NAME): $(GREEN)Creating $(LIBFT)...$(RESET)"
+	@echo "$(NAME_L): $(GREEN)Creating $(LIBFT)...$(RESET)"
 	@$(MAKE) -sC $(LIBFT_DIRECTORY)
 
 $(MINILIBX_L):
-	@echo "$(NAME): $(GREEN)Creating $(MINILIBX_L)...$(RESET)"
+	@echo "$(NAME_L): $(GREEN)Creating $(MINILIBX_L)...$(RESET)"
 	@$(MAKE) -sC $(MINILIBX_L_DIRECTORY)
 
 
 mclean:
-	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-	@$(MAKE) -sC $(MINILIBX_M_DIRECTORY) clean
+	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean || true
+	@$(MAKE) -sC $(MINILIBX_M_DIRECTORY) clean || true
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(NAME_M): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
 	@echo "$(NAME_M): $(RED)object files were deleted$(RESET)"
 
 lclean:
-	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean
-	@$(MAKE) -sC $(MINILIBX_L_DIRECTORY) clean
+	@$(MAKE) -sC $(LIBFT_DIRECTORY) clean || true
+	@$(MAKE) -sC $(MINILIBX_L_DIRECTORY) clean || true
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(NAME_L): $(RED)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
 	@echo "$(NAME_L): $(RED)object files were deleted$(RESET)"
 
 
-fclean: clean
+fclean: mclean lclean
 	@rm -f $(MINILIBX)
 	@echo "$(NAME): $(RED)$(MINILIBX) was deleted$(RESET)"
 	@rm -f $(LIBFT)
 	@echo "$(NAME): $(RED)$(LIBFT) was deleted$(RESET)"
-	@rm -f $(NAME)
+	@rm -f $(NAME_L)
+	@rm -f $(NAME_M)
 	@echo "$(NAME): $(RED)$(NAME) was deleted$(RESET)"
 
 re:

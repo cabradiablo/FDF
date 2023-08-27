@@ -53,6 +53,16 @@ void ft_init(t_datamap **datamap)
     (*datamap)->coors = NULL;
     (*datamap)->color = NULL;
 }
+void ft_init_mlx(t_mlx **datamlx)
+{
+    *datamlx= malloc(sizeof(t_mlx));
+    if (!*datamlx)
+        ft_error("MALLOC FAILED\n");
+    (*datamlx)->win = NULL;
+    (*datamlx)->img = NULL;
+    (*datamlx)->addr = NULL;
+    (*datamlx)->mlx = NULL;
+}
 
 void ft_print_map(t_datamap *datamap)
 {
